@@ -19,6 +19,18 @@ class _AddVideoPageState extends State<AddVideoPage> {
   File _videoFile = File('');
   File _thumbnailFile = File('');
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   Future _pickVideo() async {
     try {
       final returnedVideo =
@@ -94,6 +106,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Video uploaded successfully')),
             );
+            Navigator.pop(context);
           } else if (state is Error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: ${state.error}')),

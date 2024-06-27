@@ -33,6 +33,7 @@ dependencies:
   gallery_picker: ^0.5.1
   image_picker: ^1.1.2
   uuid: ^4.4.0
+  appinio_video_player: ^1.2.2
 
 dev_dependencies:
   flutter_test:
