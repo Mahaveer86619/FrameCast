@@ -7,7 +7,7 @@ import 'package:framecast/features/auth/bloc/auth_bloc.dart';
 import 'package:framecast/features/auth/view/screens/sign_up_screen.dart';
 import 'package:framecast/features/auth/view/widgets/auth_grad_button.dart';
 import 'package:framecast/features/auth/view/widgets/text_field.dart';
-import 'package:framecast/features/home/main_wrapper.dart';
+import 'package:framecast/features/home/view/screens/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
@@ -124,7 +124,7 @@ class _SignInPageState extends State<SignInPage> {
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is Authenticated) {
-                      _changeScreen(const MainWrapper());
+                      _changeScreen(const HomePage());
                     } else if (state is AuthError) {
                       _showMessage(state.error);
                     }

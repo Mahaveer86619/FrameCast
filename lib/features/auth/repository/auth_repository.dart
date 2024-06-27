@@ -7,7 +7,7 @@ class AuthRepository {
 
   AuthRepository(this._supabaseClient);
 
-  Future<DataState<void>> signUp(
+  Future<DataState<String>> signUp(
     String username,
     String email,
     String password,
@@ -27,13 +27,13 @@ class AuthRepository {
         return const DataFailure('Something went wrong', -1);
       }
 
-      return const DataSuccess(null);
+      return DataSuccess(response.user!.id);
     } catch (e) {
       return DataFailure(e.toString(), -1);
     }
   }
 
-  Future<DataState<void>> signIn(
+  Future<DataState<String>> signIn(
     String email,
     String password,
   ) async {
@@ -47,7 +47,7 @@ class AuthRepository {
         return const DataFailure('Something went wrong', -1);
       }
 
-      return const DataSuccess(null);
+      return DataSuccess(response.user!.id);
     } catch (e) {
       return DataFailure(e.toString(), -1);
     }

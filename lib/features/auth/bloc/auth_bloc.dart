@@ -30,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.password,
     );
     if (res is DataSuccess) {
-      _appUserCubit.updateUser();
+      _appUserCubit.updateUser(res.data!);
       emit(Authenticated());
     } else {
       emit(AuthError(res.error!, res.statusCode!));
@@ -44,7 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.password,
     );
     if (res is DataSuccess) {
-      _appUserCubit.updateUser();
+      _appUserCubit.updateUser(res.data!);
       emit(Authenticated());
     } else {
       emit(AuthError(res.error!, res.statusCode!));

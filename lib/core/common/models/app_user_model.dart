@@ -1,4 +1,4 @@
-class UserModel {
+class UserModel {// not keeping updated at and just sending it through the repository
   final String id;
   final String username;
   final String email;

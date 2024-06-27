@@ -1,8 +1,11 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:framecast/core/common/cubit/app_user_cubit.dart';
+import 'package:framecast/core/common/repository/app_user_repository.dart';
 import 'package:framecast/features/auth/bloc/auth_bloc.dart';
 import 'package:framecast/features/auth/repository/auth_repository.dart';
+import 'package:framecast/features/home/bloc/video_bloc.dart';
+import 'package:framecast/features/home/repository/video_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -26,19 +29,28 @@ Future<void> registerServices() async {
   sl.registerSingleton<FlutterSecureStorage>(secureStorage);
 
   //* Core
+  //* Register AppUserRepository
+  sl.registerLazySingleton<AppUserRepository>(() => AppUserRepository(sl()));
   //* Register AppUserCubit
   sl.registerLazySingleton<AppUserCubit>(() => AppUserCubit(
         secureStorage: sl<FlutterSecureStorage>(),
         sharedPreferences: sl<SharedPreferences>(),
+        appUserRepository: sl<AppUserRepository>(),
       ));
 
   //* Repository
   sl.registerLazySingleton<AuthRepository>(() => AuthRepository(sl()));
+  sl.registerLazySingleton<VideoRepository>(() => VideoRepository(sl()));
 
   //* ViewModels
   //* Register AuthBloc
   sl.registerFactory<AuthBloc>(() => AuthBloc(
         authRemoteRepository: sl<AuthRepository>(),
+        appUserCubit: sl<AppUserCubit>(),
+      ));
+  //* Register VideoBloc
+  sl.registerFactory<VideoBloc>(() => VideoBloc(
+        videoRepository: sl<VideoRepository>(),
         appUserCubit: sl<AppUserCubit>(),
       ));
 }
