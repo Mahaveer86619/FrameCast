@@ -17,9 +17,6 @@ class _PlayVideoPageState extends State<PlayVideoPage> {
   bool initialized = false;
   late CustomVideoPlayerController _customVideoPlayerController;
 
-  String videoUrl =
-      "https://cwklyzakwpbtahozjlxn.supabase.co/storage/v1/object/public/videos/047d34f0-16c2-1053-8782-19290624b80e/video";
-
   void _initVideoPlayerController() async {
     VideoPlayerController videoPlayerController;
     videoPlayerController =

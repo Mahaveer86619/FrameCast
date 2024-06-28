@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:framecast/features/auth/view/screens/sign_in_screen.dart';
 import 'package:framecast/features/home/bloc/video_bloc.dart';
 import 'package:framecast/features/home/models/video_metadata.dart';
 import 'package:framecast/features/home/view/screens/add_video_screen.dart';
 import 'package:framecast/features/home/view/screens/play_video_screen.dart';
 import 'package:framecast/features/home/view/widgets/video_tile.dart';
 import 'package:framecast/features/profile/view/screens/profile_screen.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,9 +20,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    context.read<VideoBloc>().add(
-          GetVideos(),
-        );
+    context.read<VideoBloc>().add(GetVideos());
   }
 
   @override

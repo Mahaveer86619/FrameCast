@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:framecast/core/common/constants/app_constants.dart';
 import 'package:framecast/core/common/models/app_user_model.dart';
 import 'package:framecast/core/common/repository/app_user_repository.dart';
@@ -14,18 +13,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'app_user_state.dart';
 
 class AppUserCubit extends Cubit<AppUserState> {
-  final FlutterSecureStorage _secureStorage;
   final SharedPreferences _sharedPreferences;
   final AppUserRepository _appUserRepository;
   final SupabaseClient _supabaseClient;
 
   AppUserCubit({
-    required FlutterSecureStorage secureStorage,
     required SharedPreferences sharedPreferences,
     required AppUserRepository appUserRepository,
     required SupabaseClient supabaseClient,
   })  : _appUserRepository = appUserRepository,
-        _secureStorage = secureStorage,
         _sharedPreferences = sharedPreferences,
         _supabaseClient = supabaseClient,
         super(AppUserInitial());
@@ -43,7 +39,6 @@ class AppUserCubit extends Cubit<AppUserState> {
   Future<void> loadUser() async {
     final userJson = _sharedPreferences.getString(prefUserKey);
     if (userJson != null) {
-      // final user = UserModel.fromJson(jsonDecode(userJson));
       emit(AppUserLoggedIn());
     } else {
       emit(AppUserInitial());

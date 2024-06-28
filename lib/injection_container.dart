@@ -34,7 +34,6 @@ Future<void> registerServices() async {
   sl.registerLazySingleton<AppUserRepository>(() => AppUserRepository(sl()));
   //* Register AppUserCubit
   sl.registerLazySingleton<AppUserCubit>(() => AppUserCubit(
-        secureStorage: sl<FlutterSecureStorage>(),
         sharedPreferences: sl<SharedPreferences>(),
         appUserRepository: sl<AppUserRepository>(),
         supabaseClient: sl<SupabaseClient>(),
