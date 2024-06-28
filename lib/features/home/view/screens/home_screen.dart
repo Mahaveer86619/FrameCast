@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
 
   _appBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Text(
         'FrameCast',
         style: Theme.of(context).textTheme.titleLarge!.copyWith(
