@@ -33,8 +33,9 @@ class _AddVideoPageState extends State<AddVideoPage> {
 
   Future _pickVideo() async {
     try {
-      final returnedVideo =
-          await ImagePicker().pickVideo(source: ImageSource.gallery);
+      final returnedVideo = await ImagePicker().pickVideo(
+        source: ImageSource.gallery,
+      );
 
       setState(() {
         _videoFile = File(returnedVideo!.path);
@@ -46,8 +47,9 @@ class _AddVideoPageState extends State<AddVideoPage> {
 
   Future<void> _pickThumbnail() async {
     try {
-      final returnedImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+      final returnedImage = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+      );
 
       setState(() {
         _thumbnailFile = File(returnedImage!.path);
@@ -189,38 +191,34 @@ class _AddVideoPageState extends State<AddVideoPage> {
             ),
             const SizedBox(height: 16),
             // metadata
-            Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: MyInputField(
-                    hintText: 'Enter Video title',
-                    controller: _titleController,
-                    validator: (value) {
-                      if (value!.isNotEmpty) {
-                        return 'Please enter a title';
-                      }
-                      return null;
-                    },
-                    lines: 3,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: MyInputField(
-                    hintText: 'Enter Video discription',
-                    controller: _descriptionController,
-                    validator: (value) {
-                      if (value!.isNotEmpty) {
-                        return 'Please enter a description';
-                      }
-                      return null;
-                    },
-                    lines: 7,
-                  ),
-                ),
-              ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: MyInputField(
+                hintText: 'Enter Video title',
+                controller: _titleController,
+                validator: (value) {
+                  if (value!.isNotEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                lines: 3,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: MyInputField(
+                hintText: 'Enter Video discription',
+                controller: _descriptionController,
+                validator: (value) {
+                  if (value!.isNotEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                lines: 7,
+              ),
             ),
             const SizedBox(height: 16),
             // upload button

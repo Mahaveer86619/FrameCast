@@ -7,6 +7,7 @@ import 'package:framecast/features/auth/bloc/auth_bloc.dart';
 import 'package:framecast/features/auth/view/screens/sign_in_screen.dart';
 import 'package:framecast/features/home/bloc/video_bloc.dart';
 import 'package:framecast/features/home/view/screens/home_screen.dart';
+import 'package:framecast/features/profile/bloc/profile_bloc.dart';
 import 'package:framecast/injection_container.dart' as di;
 
 void main() async {
@@ -38,6 +39,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider<VideoBloc>(
           create: (_) => di.sl<VideoBloc>(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (_) => di.sl<ProfileBloc>(),
         ),
       ],
       child: MaterialApp(

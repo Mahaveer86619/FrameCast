@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:framecast/core/common/models/app_user_model.dart';
 import 'package:framecast/core/resources/data_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class AppUserRepository {
   final SupabaseClient _supabaseClient;
@@ -27,21 +30,40 @@ class AppUserRepository {
     }
   }
 
-  Future<DataState<void>> updateUser(String userId, UserModel user) async {
+  Future<String> uploadAvatar(String userId, File avatarFile) async {
     try {
-      final response = await _supabaseClient.from('profiles').update({
-        'username': user.username,
-        'email': user.email,
-        'avatar_url': user.avatarUrl,
+      debugPrint('avatarFile: ${avatarFile.path}');
+      final extra = const Uuid().v1();
+      await _supabaseClient.storage.from('avatars').upload(
+            '$userId/$extra',
+            avatarFile,
+          );
+      final String publicUrl = _supabaseClient.storage
+          .from('avatars')
+          .getPublicUrl('$userId/$extra');
+      await _supabaseClient.from('profiles').update({
+        'avatar_url': publicUrl,
+        'updated_at': DateTime.now().toIso8601String(),
       }).eq('id', userId);
-
-      if (response.error != null) {
-        return DataFailure(response.error!.message, -1);
-      }
-
-      return const DataSuccess(null);
+      return publicUrl;
     } catch (e) {
-      return DataFailure(e.toString(), -1);
+      debugPrint('Error uploading avatar: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> updateUser(
+    String userId,
+    String username,
+  ) async {
+    try {
+      await _supabaseClient.from('profiles').update({
+        'username': username,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', userId);
+    } catch (e) {
+      debugPrint('Error uploading avatar: $e');
+      rethrow;
     }
   }
 }

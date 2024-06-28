@@ -10,7 +10,10 @@ class VideoRepository {
 
   VideoRepository(this.supabaseClient);
 
-  Future<DataState<String>> uploadVideo(File video, String videoId) async {
+  Future<DataState<String>> uploadVideo(
+    File video,
+    String videoId,
+  ) async {
     try {
       await supabaseClient.storage.from('videos').upload(
             '$videoId/video',
@@ -25,7 +28,9 @@ class VideoRepository {
   }
 
   Future<DataState<String>> uploadThumbnail(
-      File thumbnail, String videoId) async {
+    File thumbnail,
+    String videoId,
+  ) async {
     try {
       await supabaseClient.storage.from('videos').upload(
             '$videoId/thumbnail',
@@ -51,12 +56,12 @@ class VideoRepository {
   Future<List<VideoMetadata>> getVideos() async {
     try {
       final res = await supabaseClient.from('videos').select('*, profiles (*)');
-      final videos = res.map((video) => VideoMetadata.fromJson(video).copyWith(
-        ownerPicUrl: video['profiles']['avatar_url'],
-        ownerName: video['profiles']['username'],
-      )).toList();
-
-      debugPrint('videos: ${videos.length}');
+      final videos = res
+          .map((video) => VideoMetadata.fromJson(video).copyWith(
+                ownerPicUrl: video['profiles']['avatar_url'],
+                ownerName: video['profiles']['username'],
+              ))
+          .toList();
 
       return videos;
     } catch (e) {

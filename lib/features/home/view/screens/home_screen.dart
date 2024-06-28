@@ -6,6 +6,7 @@ import 'package:framecast/features/home/models/video_metadata.dart';
 import 'package:framecast/features/home/view/screens/add_video_screen.dart';
 import 'package:framecast/features/home/view/screens/play_video_screen.dart';
 import 'package:framecast/features/home/view/widgets/video_tile.dart';
+import 'package:framecast/features/profile/view/screens/profile_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -98,18 +99,15 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.transparent,
       actions: [
-        IconButton(
-          onPressed: () {
-            Supabase.instance.client.auth.signOut();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SignInPage(),
-              ),
-            );
-          },
-          icon: const Icon(Icons.exit_to_app),
+        CircleAvatar(
+          child: IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              _changeScreen(const ProfilePage());
+            },
+          ),
         ),
+        const SizedBox(width: 12),
       ],
     );
   }

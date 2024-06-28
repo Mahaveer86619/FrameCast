@@ -6,6 +6,7 @@ import 'package:framecast/features/auth/bloc/auth_bloc.dart';
 import 'package:framecast/features/auth/repository/auth_repository.dart';
 import 'package:framecast/features/home/bloc/video_bloc.dart';
 import 'package:framecast/features/home/repository/video_repository.dart';
+import 'package:framecast/features/profile/bloc/profile_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,6 +37,7 @@ Future<void> registerServices() async {
         secureStorage: sl<FlutterSecureStorage>(),
         sharedPreferences: sl<SharedPreferences>(),
         appUserRepository: sl<AppUserRepository>(),
+        supabaseClient: sl<SupabaseClient>(),
       ));
 
   //* Repository
@@ -51,6 +53,10 @@ Future<void> registerServices() async {
   //* Register VideoBloc
   sl.registerFactory<VideoBloc>(() => VideoBloc(
         videoRepository: sl<VideoRepository>(),
+        appUserCubit: sl<AppUserCubit>(),
+      ));
+  //* Register ProfileBloc
+  sl.registerFactory<ProfileBloc>(() => ProfileBloc(
         appUserCubit: sl<AppUserCubit>(),
       ));
 }
